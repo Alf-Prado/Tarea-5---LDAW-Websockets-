@@ -245,11 +245,11 @@ io.on('connection', (socket) => {
     if(game.players.length == 2){
       if(game.players[0].socket == socket && game.players[0].opponent != null) {
         game.players[0].opponent.socket.emit("opponentGone");
-        console.log("El oponente de 0 se ha ido");
+        console.log("El oponente de 1 se ha ido");
       }
       else if(game.players[1].socket == socket && game.players[1].opponent != null) {
         game.players[1].opponent.socket.emit("opponentGone");
-        console.log("El oponente de 1 se ha ido");
+        console.log("El oponente de 0 se ha ido");
       }
     }
 

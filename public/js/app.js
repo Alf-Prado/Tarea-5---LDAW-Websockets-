@@ -25,6 +25,7 @@ window.socket.on('iniciarJuego', function(data) {
 window.socket.on('opponentGone', function() {
     document.getElementById('msg').innerHTML = "El oponente se ha ido de la partida.";
     console.log("El oponente se ha desconectado");
+    document.getElementById('reload').hidden = false;
 });
 
 //Iniciar contador de basta
