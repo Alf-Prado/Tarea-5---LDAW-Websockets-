@@ -49,7 +49,7 @@ function declareBasta(){
 //Empezar cuenta regresiva
 function showCount() {
     document.getElementById('note').hidden = false;
-    var i = 2;
+    var i = 10;
     var time = setInterval(function() {
         showToast(i);
         i--;
