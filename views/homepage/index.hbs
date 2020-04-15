@@ -1,49 +1,46 @@
 <main role="main" class="container">
-  <div class="row">
-    <div class="row-12">
-      {{!-- <input 
-        type="button" 
-        value="Send Toast" 
-        class="btn btn-info"
-        onclick="showToast('Mi mensaje')"> --}}
 
-      <input 
-        type="button" 
-        value="Send Message to Server" 
-        class="btn btn-danger"
-        onclick="messageToServer('Mensaje desde el cliente.')">
-    </div>
-
+  <div class="row-12 text-center div-title">
+    <h1 id="title">Basta de Alf</h1>
   </div>
 
-  <div class="row-12 text-center" style="margin: 4%;">
-    <h1 id="title" style="font-style: oblique">Basta de Alf</h1>
-  </div>
-
-  <div class="row-12 text-center">
+  <div class="row-12 text-center" style="margin: 3%;">
     <h5 id="msg">Esperando a un oponente...</h5>
+    <h5 id="note" hidden>¡Alguien dijo BASTA!</h5>
+    <button id="reload" class="btn btn-success" onClick="window.location.reload();" hidden>Volver a Jugar</button>
   </div>
+
+  <div class="formulario">
+
+    <div class="row-12">
+      <h4 id="playerName" class="text-center"></h4>
+    </div>
+    
 
     <form action="" class="text-center">
       <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre">
+        <label for="nombre" class="label">Nombre</label><br>
+        <input type="text" name="nombre" id="nombre" class="input">
       </div>
 
       <div class="form-group">
-        <label for="color">Color</label>
-        <input type="text" name="color" id="color">
+        <label for="color" class="label">Color</label><br>
+        <input type="text" name="color" id="color" class="input">
       </div>
 
       <div class="form-group">
-        <label for="fruto">Fruto</label>
-        <input type="text" name="fruto" id="fruto">
+        <label for="fruto" class="label">Fruto</label><br>
+        <input type="text" name="fruto" id="fruto" class="input">
       </div>
 
       <button 
         type="button" 
         class="btn btn-info"
-        onclick="declareBasta()">BASTA</button>
+        onclick="declareBasta()"
+        id="btn"
+        disabled>BASTA</button>
     </form>
+
+  </div>
   
 </main>

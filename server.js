@@ -95,8 +95,8 @@ class Game {
       this.players[i].status = 'undefined';
       this.players.pop();
     }
-    console.log("Active have been eliminated " + this.players.length);
 
+    //Indicamos que el juego ya termino
     this.hasFinished = false;
     //Checamos la lista de espera
     this.checkWaitList();
@@ -170,30 +170,34 @@ class Game {
       frutoPoints = 10;
     }
 
+    //asignamos los puntos al jugador
     totalPoints = nombrePoints + colorPoints + frutoPoints;
     this.players[numPlayer].points = totalPoints;
     console.log(this.players[numPlayer].points);
     
   }
 
+  //Definimos que jugador fue quien gano
   findWinner(){
-    console.log("Buscando al ganador");
-
+    //Jugador 0 tiene más puntos
     if(this.players[0].points > this.players[1].points){
       this.players[0].status = "¡Ganaste, felicidades!";
-      this.players[1].status = "Perdiste, más suerte para la próxima";
+      this.players[1].status = "Perdiste, más suerte para la próxima.";
     }
     
+    //Jugador 1 tiene más puntos
     if(this.players[0].points < this.players[1].points){
       this.players[1].status = "¡Ganaste, felicidades!";
-      this.players[0].status = "Perdiste, más suerte para la próxima";
+      this.players[0].status = "Perdiste, más suerte para la próxima.";
     }
     
+    //Ambos jugadores tienen los mismos puntos
     if (this.players[0].points == this.players[1].points) {
       this.players[0].status = "¡Empate!";
       this.players[1].status = "¡Empate!";    
     }
 
+    //Indicamos que termino la partida
     this.hasFinished = true;
 
   }
@@ -230,10 +234,6 @@ io.on('connection', (socket) => {
 
   socket.emit('toast', {message: `Bienvenido al juego jugador ${player.id}.`});
 
-  socket.on('message-to-server', (data) => {
-    console.log('message-received', data);
-  });
-
   //Desconexión de un jugador
   socket.on("disconnect", () => {
     console.log("Client disconnected: ", socket.id);
@@ -253,6 +253,7 @@ io.on('connection', (socket) => {
       }
     }
 
+    //Eliminamos al jugador de las listas
     game.deletePlayer(socket.id);
 
   });
@@ -260,6 +261,8 @@ io.on('connection', (socket) => {
   //Si hay dos jugadores el juego puede comenzar
   if (game.players.length == 2) {
     var letter = game.calculateLetter();
+    //Le decimos a los jugadores que letra toco
+
     game.players[0].socket.emit("iniciarJuego", {
       letter: letter,
       number: 0
@@ -274,6 +277,7 @@ io.on('connection', (socket) => {
   //Indicar que se activo el basta
   socket.on("activarBasta", function() {
     console.log("Se activo el basta");
+    //Le decimos a los clientes que activen su cuenta atrás
     game.players[0].socket.emit("startCount");
     game.players[1].socket.emit("startCount");
   });
@@ -281,8 +285,12 @@ io.on('connection', (socket) => {
   //Recibir respuestas del cliente
   socket.on('answers-to-server', (data) => {
     console.log('Respuestas del jugador: ' + data.jugador + ' es: ', data);
+    //Se revisan las respuestas del jugador 
     game.evalAnswers(data.nombre, data.color, data.fruto, data.jugador);
     cont++;
+
+    //Si todos los jugadores mandaron sus respuestas y fueron evaluadas
+    //se busca al ganador
     if (cont == 2) {
       game.findWinner();
 
@@ -301,7 +309,7 @@ io.on('connection', (socket) => {
         game.finishGame();
         cont = 0;
 
-        //Iniciar un nuevo juego
+        //Iniciar un nuevo juego en caso de que hubiera gente esperando
         if (game.players.length == 2) {
           var letter = game.calculateLetter();
           game.players[0].socket.emit("iniciarJuego", {
@@ -319,33 +327,8 @@ io.on('connection', (socket) => {
 
   });
 
-  if(game.players.length == 2){  
-    //Checar si ya se tienen las dos respuestas
-    /* if(game.players[0].points != -1 && game.players[1].points != -1){
-      console.log("Finding winner");
-      game.findWinner();
-
-      //Mandarle los resultados al jugador
-      if (game.hasFinished == true) {
-        console.log("GAME OVER");
-        for(i = 0; i < game.players.length; i++){
-          game.players[i].socket.emit("showResults", {
-            status: game.players[i].status,
-            puntaje: game.players[i].points,
-            oponente: game.players[i].opponent.points
-          });
-        }
-
-        //Terminar el juego
-        game.finishGame();
-      } 
-    }*/
-  }
-
-  game.showPlayers();
+    game.showPlayers();
 })
-
-
 
 // App init
 server.listen(appConfig.expressPort, () => {
