@@ -1,11 +1,11 @@
 <main role="main" class="container">
   <div class="row">
     <div class="row-12">
-      <input 
+      {{!-- <input 
         type="button" 
         value="Send Toast" 
         class="btn btn-info"
-        onclick="showToast('Mi mensaje')">
+        onclick="showToast('Mi mensaje')"> --}}
 
       <input 
         type="button" 
@@ -13,5 +13,37 @@
         class="btn btn-danger"
         onclick="messageToServer('Mensaje desde el cliente.')">
     </div>
+
   </div>
+
+  <div class="row-12 text-center" style="margin: 4%;">
+    <h1 id="title" style="font-style: oblique">Basta de Alf</h1>
+  </div>
+
+  <div class="row-12 text-center">
+    <h5 id="msg">Esperando a un oponente...</h5>
+  </div>
+
+    <form action="" class="text-center">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre">
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" name="color" id="color">
+      </div>
+
+      <div class="form-group">
+        <label for="fruto">Fruto</label>
+        <input type="text" name="fruto" id="fruto">
+      </div>
+
+      <button 
+        type="button" 
+        class="btn btn-info"
+        onclick="declareBasta()">BASTA</button>
+    </form>
+  
 </main>
