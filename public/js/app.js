@@ -19,10 +19,12 @@ window.socket.on('iniciarJuego', function(data) {
     document.getElementById('msg').innerHTML = "La letra es: " + letter;
     document.getElementById('msg').style.color = "blue";
     document.getElementById('btn').disabled = false;
+    document.getElementById('reload').hidden = true;
 });
 
 //Oponente desconectado
 window.socket.on('opponentGone', function() {
+    document.getElementById('btn').disabled = true;
     document.getElementById('msg').innerHTML = "El oponente se ha ido de la partida.";
     console.log("El oponente se ha desconectado");
     document.getElementById('reload').hidden = false;
@@ -42,13 +44,13 @@ function showToast(msg) {
 
 //Indicarle al servidor que alguien puso basta
 function declareBasta(){
-    document.getElementById('btn').disabled = true;
     window.socket.emit('activarBasta');
 }
 
 //Empezar cuenta regresiva
 function showCount() {
     document.getElementById('note').hidden = false;
+    document.getElementById('btn').disabled = true;
     var i = 10;
     var time = setInterval(function() {
         showToast(i);
